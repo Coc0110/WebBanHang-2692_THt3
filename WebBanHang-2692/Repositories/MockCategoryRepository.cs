@@ -10,8 +10,9 @@ namespace WebBanHang_2692.Repositories
         {
             _categoryList = new List<Category>
         {
-            new Category { Id = 1, Name = "Laptop" },
-            new Category { Id = 2, Name = "Desktop" },
+            new Category { Id = 1, Name = "Pokemon" },
+            new Category { Id = 2, Name = "Pokeball" },
+            new Category { Id = 3, Name = "PokeItem"},
             // Thêm các category khác
         };
         }
