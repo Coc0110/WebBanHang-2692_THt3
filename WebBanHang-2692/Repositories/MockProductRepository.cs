@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using WebBanHang_2692.Models;
 
@@ -8,12 +8,27 @@ public class MockProductRepository : IProductRepository
 
     public MockProductRepository()
     {
-        // Tạo một số dữ liệu mẫu
+        // Khởi tạo trước danh mục để dùng chung
+        var catPokemon = new Category { Id = 1, Name = "Pokemon" };
+        var catPokeball = new Category { Id = 2, Name = "Pokeball" };
+
         _products = new List<Product>
         {
-            new Product { Id = 1, Name = "Bulbasaur", Price = 1000,
-Description = "Grass Female"},
-            // Thêm các sản phẩm khác
+            new Product { Id = 1, Name = "Bulbasaur", Price = 1000, Description = "Grass / Poison", ImageUrl = "/images/Pokemon/0001_bulbasaur.jpg", CategoryId = 1, Category = catPokemon },
+            new Product { Id = 2, Name = "Ivysaur", Price = 1500, Description = "Grass / Poison", ImageUrl = "/images/Pokemon/0002_ivysaur.jpg", CategoryId = 1, Category = catPokemon },
+            new Product { Id = 3, Name = "Venusaur", Price = 3000, Description = "Grass / Poison", ImageUrl = "/images/Pokemon/0003_venusaur.jpg", CategoryId = 1, Category = catPokemon },
+            new Product { Id = 4, Name = "Charmander", Price = 1000, Description = "Fire", ImageUrl = "/images/Pokemon/0004_charmander.jpg", CategoryId = 1, Category = catPokemon },
+            new Product { Id = 5, Name = "Charmeleon", Price = 1500, Description = "Fire", ImageUrl = "/images/Pokemon/0005_charmeleon.jpg", CategoryId = 1, Category = catPokemon },
+            new Product { Id = 6, Name = "Charizard", Price = 3500, Description = "Fire / Flying", ImageUrl = "/images/Pokemon/0006_charizard.jpg", CategoryId = 1, Category = catPokemon },
+            new Product { Id = 7, Name = "Squirtle", Price = 1000, Description = "Water", ImageUrl = "/images/Pokemon/0007_squirtle.jpg", CategoryId = 1, Category = catPokemon },
+            new Product { Id = 8, Name = "Wartortle", Price = 1500, Description = "Water", ImageUrl = "/images/Pokemon/0008_wartortle.jpg", CategoryId = 1, Category = catPokemon },
+            new Product { Id = 9, Name = "Blastoise", Price = 3000, Description = "Water", ImageUrl = "/images/Pokemon/0009_blastoise.jpg", CategoryId = 1, Category = catPokemon },
+            
+            new Product { Id = 10, Name = "Poke Ball", Price = 200, Description = "Standard ball", ImageUrl = "/images/PokeBall/Poke_Ball.webp", CategoryId = 2, Category = catPokeball },
+            new Product { Id = 11, Name = "Great Ball", Price = 600, Description = "Higher catch rate", ImageUrl = "/images/PokeBall/Great_Ball.webp", CategoryId = 2, Category = catPokeball },
+            new Product { Id = 12, Name = "Ultra Ball", Price = 1200, Description = "Very high catch rate", ImageUrl = "/images/PokeBall/Ultra_Ball.webp", CategoryId = 2, Category = catPokeball },
+            new Product { Id = 13, Name = "Master Ball", Price = 50000, Description = "100% catch rate", ImageUrl = "/images/PokeBall/Master_Ball.webp", CategoryId = 2, Category = catPokeball },
+            new Product { Id = 14, Name = "Beast Ball", Price = 10000, Description = "For Ultra Beasts", ImageUrl = "/images/PokeBall/Beast_Ball.webp", CategoryId = 2, Category = catPokeball }
         };
     }
 

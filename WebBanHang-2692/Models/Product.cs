@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebBanHang_2692.Models
 {
@@ -11,6 +11,7 @@ namespace WebBanHang_2692.Models
         public decimal Price { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
+        public Category? Category { get; set; }
         public string? ImageUrl { get; set; }
         public List<string>? ImageUrls { get; set; }
     }

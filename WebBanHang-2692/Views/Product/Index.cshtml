@@ -1,63 +1,80 @@
-﻿@model IEnumerable<WebBanHang_2692.Models.Product>
+@model IEnumerable<WebBanHang_2692.Models.Product>
 @{
     ViewData["Title"] = "Quản lý sản phẩm";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Quản Lý Sản Phẩm (Admin)</h2>
+    <h2>Quản Lý Sản Phẩm</h2>
     <a asp-action="Add" class="btn btn-success">
         <i class="bi bi-plus-circle"></i> Thêm Sản Phẩm Mới
     </a>
 </div>
 
-<table id="productTable" class="table table-striped table-bordered table-hover">
-    <thead class="table-dark text-center">
-        <tr>
-            <th style="width: 100px;">Hình ảnh</th>
-            <th>Tên sản phẩm</th>
-            <th>Giá bán</th>
-            <th>Mô tả</th>
-            <th style="width: 180px;">Thao tác</th>
-        </tr>
-    </thead>
-    <tbody class="align-middle">
-        @foreach (var item in Model)
-        {
+<div class="table-responsive rounded shadow-sm">
+    <table id="myTable" class="table table-striped table-striped table-hover mb-0">
+        <thead class="text-center">
             <tr>
-                <td class="text-center">
-                    @if (!string.IsNullOrEmpty(item.ImageUrl))
-                    {
-                        <img src="@item.ImageUrl" alt="@item.Name" style="width: 70px; height: 70px; object-fit: cover;" class="rounded shadow-sm" />
-                    }
-                </td>
-                <td class="fw-semibold">@item.Name</td>
-                <td class="text-danger fw-bold text-end">@item.Price.ToString("#,##0.00") đ</td>
-                <td>@item.Description</td>
-                <td class="text-center">
-                    <div class="btn-group" role="group">
-                        <a asp-action="Display" asp-route-id="@item.Id" class="btn btn-info btn-sm text-white">Xem</a>
-                        <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Sửa</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Xóa</a>
-                    </div>
-                </td>
+                <th style="width: 80px;">Mã SP</th>
+                <th style="width: 100px;">Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Danh mục</th>
+                <th>Giá bán</th>
+                <th>Mô tả</th>
+                <th style="width: 180px;">Thao tác</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody class="align-middle">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center fw-bold text-secondary">#@item.Id</td>
+                    <td class="text-center">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@item.ImageUrl" alt="@item.Name" style="width: 60px; height: 60px; object-fit: cover;" class="rounded" />
+                        }
+                    </td>
+                    <td class="fw-semibold">@item.Name</td>
+                    <td>@(item.Category?.Name ?? "Chưa phân loại")</td>
+                    <td class="text-warning fw-bold text-end">@item.Price.ToString("#,##0") đ</td>
+                    <td class="text-truncate" style="max-width: 200px;">@item.Description</td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a asp-action="Display" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Xem</a>
+                            <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">Sửa</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">Xóa</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            $('#productTable').DataTable({
-                // Việt hóa các dòng chữ của DataTables
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json"
-                },
-                "order": [[1, "asc"]], // Mặc định sắp xếp theo cột Tên (cột index 1)
-                "columnDefs": [
-                    { "orderable": false, "targets": [0, 4] } // Tắt sắp xếp cho cột Hình ảnh và Thao tác
-                ]
-            });
+        // Khởi tạo DataTables với bộ dịch tiếng Việt nhúng trực tiếp
+        let table = new DataTable('#myTable', {
+            language: {
+                processing: "Đang xử lý...",
+                search: "Tìm kiếm:",
+                lengthMenu: "Hiển thị _MENU_ sản phẩm",
+                info: "Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ sản phẩm",
+                infoEmpty: "Hiển thị 0 đến 0 trong tổng số 0 sản phẩm",
+                infoFiltered: "(được lọc từ _MAX_ sản phẩm)",
+                zeroRecords: "Không tìm thấy sản phẩm nào phù hợp",
+                emptyTable: "Không có dữ liệu trong bảng",
+                paginate: {
+                    first: "Đầu",
+                    previous: "Trước",
+                    next: "Tiếp",
+                    last: "Cuối"
+                }
+            },
+            order: [], // Mặc định không sắp xếp để giữ nguyên thứ tự ban đầu
+            columnDefs: [
+                { orderable: false, targets: [1, 6] } // Tắt sắp xếp cho cột Hình ảnh (1) và Thao tác (6)
+            ]
         });
     </script>
 }
