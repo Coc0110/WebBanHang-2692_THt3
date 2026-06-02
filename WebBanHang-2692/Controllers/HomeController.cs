@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Threading.Tasks; // Thêm dòng này để hỗ trợ Task
 using WebBanHang_2692.Models;
+using WebBanHang_2692.Repositories;
 
 namespace WebBanHang_2692.Controllers
 {
@@ -13,12 +15,13 @@ namespace WebBanHang_2692.Controllers
             _productRepository = productRepository;
         }
 
-        public IActionResult Index(int page = 1) // Nhận tham số page, mặc định là trang 1
+        // 1. THÊM ASYNC VÀ TASK VÀO ĐÂY
+        public async Task<IActionResult> Index(int page = 1)
         {
             int pageSize = 12; // Số sản phẩm trên 1 trang (3 hàng x 4 cột = 12)
 
-            // Lấy toàn bộ sản phẩm
-            var allProducts = _productRepository.GetAll();
+            // 2. THÊM AWAIT VÀ ĐỔI THÀNH GetAllAsync()
+            var allProducts = await _productRepository.GetAllAsync();
 
             // Đếm tổng số sản phẩm hiện có
             int totalProducts = allProducts.Count();

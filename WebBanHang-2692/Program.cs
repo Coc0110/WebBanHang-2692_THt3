@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using WebBanHang_2692.Models;
 using WebBanHang_2692.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,8 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<IProductRepository, MockProductRepository>();
-builder.Services.AddScoped<ICategoryRepository, MockCategoryRepository>();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IProductRepository, EFProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
 
 var app = builder.Build();
 
