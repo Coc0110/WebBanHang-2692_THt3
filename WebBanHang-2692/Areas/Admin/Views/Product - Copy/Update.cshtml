@@ -1,0 +1,41 @@
+﻿@model WebBanHang_2692.Models.Product
+
+<h2>Edit Product</h2>
+
+<form asp-action="Update" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+
+    <input type="hidden" asp-for="ImageUrl" />
+    <input type="hidden" asp-for="CategoryId" />
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Update Main Image</label>
+        <input type="file" name="mainImage" class="form-control" />
+
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <div class="mt-2">
+                <p>Current Image:</p>
+                <img src="@Model.ImageUrl" alt="Current Image" style="max-width: 150px; height: auto;" />
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Update</button>
+</form>
