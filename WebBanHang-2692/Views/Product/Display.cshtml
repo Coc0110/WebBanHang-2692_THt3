@@ -1,4 +1,4 @@
-﻿@model WebBanHang_2692.Models.Product
+@model WebBanHang_2692.Models.Product
 @{
     ViewData["Title"] = "Chi tiết sản phẩm";
 }
@@ -65,26 +65,29 @@
 
             <p class="mb-4">@Model.Description</p>
 
-            <div class="mb-4">
-                <h5>Phân loại:</h5>
-                <div class="btn-group" role="group" aria-label="Color selection">
-                    <input type="radio" class="btn-check" name="color" id="black" autocomplete="off" checked>
-                    <label class="btn btn-outline-dark" for="black">Thường</label>
-                    <input type="radio" class="btn-check" name="color" id="silver" autocomplete="off">
-                    <label class="btn btn-outline-danger" for="silver">Shiny</label>
+            @if (!User.IsInRole(WebBanHang_2692.Models.SD.Role_Admin))
+            {
+                <div class="mb-4">
+                    <h5>Phân loại:</h5>
+                    <div class="btn-group" role="group" aria-label="Color selection">
+                        <input type="radio" class="btn-check" name="color" id="black" autocomplete="off" checked>
+                        <label class="btn btn-outline-dark" for="black">Thường</label>
+                        <input type="radio" class="btn-check" name="color" id="silver" autocomplete="off">
+                        <label class="btn btn-outline-danger" for="silver">Shiny</label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mb-4">
-                <label for="quantity" class="form-label fw-bold">Số lượng:</label>
-                <input type="number" class="form-control" id="quantity" value="1" min="1" style="width: 100px;">
-            </div>
+                <div class="mb-4">
+                    <label for="quantity" class="form-label fw-bold">Số lượng:</label>
+                    <input type="number" class="form-control" id="quantity" value="1" min="1" style="width: 100px;">
+                </div>
 
-            <button class="btn btn-danger btn-lg mb-3 me-2 px-5 shadow-sm">
-                <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-            </button>
+                <button class="btn btn-danger btn-lg mb-3 me-2 px-5 shadow-sm">
+                    <i class="bi bi-cart-plus"></i> Thêm vào giỏ
+                </button>
+            }
 
-            <a asp-action="Index" class="btn btn-outline-secondary btn-lg mb-3 shadow-sm">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg mb-3 shadow-sm">
                 <i class="bi bi-arrow-left"></i> Quay lại
             </a>
 

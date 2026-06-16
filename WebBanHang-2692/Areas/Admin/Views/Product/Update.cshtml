@@ -1,12 +1,25 @@
-﻿@model WebBanHang_2692.Models.Product
+@model WebBanHang_2692.Models.Product
 
 <h2>Edit Product</h2>
 
-<form asp-action="Update" enctype="multipart/form-data">
-    <input type="hidden" asp-for="Id" />
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show shadow-sm mt-3" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i><strong>Thành công!</strong> @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
+<form asp-action="Update" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="ImageUrl" />
-    <input type="hidden" asp-for="CategoryId" />
+
+    <div class="form-group">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
 
     <div class="form-group">
         <label asp-for="Name"></label>
@@ -24,15 +37,38 @@
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label>Update Main Image</label>
+    <div class="form-group mt-3">
+        <label>Ảnh đại diện (Main Image)</label>
         <input type="file" name="mainImage" class="form-control" />
 
         @if (!string.IsNullOrEmpty(Model.ImageUrl))
         {
             <div class="mt-2">
-                <p>Current Image:</p>
-                <img src="@Model.ImageUrl" alt="Current Image" style="max-width: 150px; height: auto;" />
+                <p class="mb-1 text-muted small">Ảnh hiện tại:</p>
+                <img src="@Model.ImageUrl" alt="Current Image" style="max-width: 150px; height: auto; border-radius: 8px;" class="shadow-sm" />
+            </div>
+        }
+    </div>
+
+    <div class="form-group mt-3">
+        <label>Thêm Ảnh phụ (Secondary Images)</label>
+        <input type="file" name="imageUrls" class="form-control" multiple />
+
+        @if (Model.Images != null && Model.Images.Any())
+        {
+            <div class="mt-2">
+                <p class="mb-1 text-muted small">Các ảnh phụ hiện tại:</p>
+                <div class="d-flex gap-2 flex-wrap">
+                    @foreach (var img in Model.Images)
+                    {
+                        <div class="position-relative d-inline-block">
+                            <img src="@img.Url" alt="Secondary Image" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" class="shadow-sm" />
+                            <a href="/Admin/Product/DeleteImage?imageId=@img.Id&productId=@Model.Id" onclick="return confirm('Bạn có chắc chắn muốn xóa ảnh này?');" class="btn btn-sm btn-danger position-absolute top-0 end-0 rounded-circle shadow-sm" style="width: 20px; height: 20px; padding: 0; line-height: 18px; text-align: center; transform: translate(30%, -30%); text-decoration: none;">
+                                <i class="bi bi-x"></i>
+                            </a>
+                        </div>
+                    }
+                </div>
             </div>
         }
     </div>

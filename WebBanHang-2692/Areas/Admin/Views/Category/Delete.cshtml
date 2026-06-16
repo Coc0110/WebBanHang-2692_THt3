@@ -1,0 +1,19 @@
+@model WebBanHang_2692.Models.Category
+@{
+    ViewData["Title"] = "Xóa Danh Mục";
+}
+
+<div class="row mt-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="alert alert-danger shadow-sm">
+            <h4 class="alert-heading">Xác nhận xóa</h4>
+            <p>Bạn có chắc chắn muốn xóa danh mục <strong>@Model.Name</strong> không?</p>
+            <hr>
+            <form asp-action="DeleteConfirmed" method="post" class="d-flex justify-content-end gap-2">
+                <input type="hidden" asp-for="Id" />
+                <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+                <button type="submit" class="btn btn-danger">Đồng ý Xóa</button>
+            </form>
+        </div>
+    </div>
+</div>

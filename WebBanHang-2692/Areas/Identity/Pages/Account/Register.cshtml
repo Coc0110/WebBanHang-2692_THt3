@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -149,7 +149,7 @@
 
         <div class="form-container sign-up-container">
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="florin-form">
-                <h1>Create Account</h1>
+                <h1>Đăng ký tài khoản</h1>
                 <div asp-validation-summary="ModelOnly" class="text-danger" style="font-size: 12px;"></div>
 
                 <input asp-for="Input.FullName" class="florin-input" autocomplete="fullname" aria-required="true" placeholder="Họ và Tên" />
@@ -158,28 +158,28 @@
                 <input asp-for="Input.Email" class="florin-input" autocomplete="username" aria-required="true" placeholder="Email" />
                 <span asp-validation-for="Input.Email" class="text-danger" style="font-size: 10px;"></span>
 
-                <input asp-for="Input.Password" class="florin-input" autocomplete="new-password" aria-required="true" placeholder="Password" />
+                <input asp-for="Input.Password" class="florin-input" autocomplete="new-password" aria-required="true" placeholder="Mật khẩu" />
                 <span asp-validation-for="Input.Password" class="text-danger" style="font-size: 10px;"></span>
 
-                <input asp-for="Input.ConfirmPassword" class="florin-input" autocomplete="new-password" aria-required="true" placeholder="Confirm Password" />
+                <input asp-for="Input.ConfirmPassword" class="florin-input" autocomplete="new-password" aria-required="true" placeholder="Xác nhận mật khẩu" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger" style="font-size: 10px;"></span>
 
                 <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="florin-input">
                     <option disabled selected>- Chọn vai trò -</option>
                 </select>
 
-                <button id="registerSubmit" type="submit" class="florin-button">Sign Up</button>
+                <button id="registerSubmit" type="submit" class="florin-button">Đăng ký</button>
 
-                <a href="/" style="font-size: 12px; color: #777; margin-top: 25px; text-decoration: underline;">Continue without account ➔</a>
+                <a href="/" style="font-size: 12px; color: #777; margin-top: 25px; text-decoration: underline;">Tiếp tục không cần tài khoản ➔</a>
             </form>
         </div>
 
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
-                    <h1>Welcome Back!</h1>
-                    <p>To keep connected with us please login with your personal info</p>
-                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="florin-button ghost">Sign In</a>
+                    <h1>Chào mừng trở lại!</h1>
+                    <p>Để tiếp tục mua sắm, vui lòng đăng nhập bằng tài khoản của bạn</p>
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="florin-button ghost">Đăng nhập</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,38 @@
+@model IEnumerable<WebBanHang_2692.Models.Category>
+@{
+    ViewData["Title"] = "Quản lý Danh mục";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Quản Lý Danh Mục</h2>
+    <a asp-action="Add" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Thêm Danh Mục
+    </a>
+</div>
+
+<div class="table-responsive rounded shadow-sm">
+    <table class="table table-striped table-hover mb-0">
+        <thead class="text-center">
+            <tr>
+                <th style="width: 100px;">Mã DM</th>
+                <th>Tên Danh Mục</th>
+                <th style="width: 200px;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle text-center">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="fw-bold text-secondary">#@item.Id</td>
+                    <td class="fw-semibold">@item.Name</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">Sửa</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">Xóa</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

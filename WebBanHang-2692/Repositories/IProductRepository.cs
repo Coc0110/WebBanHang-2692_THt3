@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using WebBanHang_2692.Models;
 
 public interface IProductRepository
@@ -8,4 +8,5 @@ public interface IProductRepository
     Task AddAsync(Product product);
     Task UpdateAsync(Product product);
     Task DeleteAsync(int id);
+    Task DeleteImageAsync(int imageId);
 }

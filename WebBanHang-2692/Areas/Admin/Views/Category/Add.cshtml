@@ -1,0 +1,27 @@
+@model WebBanHang_2692.Models.Category
+@{
+    ViewData["Title"] = "Thêm Danh Mục";
+}
+
+<div class="row mt-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Thêm Danh Mục Mới</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Add">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-bold">Tên Danh Mục</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+                        <button type="submit" class="btn btn-success">Thêm mới</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
