@@ -143,5 +143,37 @@ namespace WebBanHang_2692.Controllers
             await _productRepository.DeleteAsync(id);
             return RedirectToAction("Index");
         }
+
+        // Lọc sản phẩm theo danh mục
+        // Lọc sản phẩm theo danh mục (Có phân trang)
+        public async Task<IActionResult> ByCategory(int id, int page = 1)
+        {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null) return NotFound();
+
+            var products = await _productRepository.GetAllAsync();
+            var filteredProducts = products.Where(p => p.CategoryId == id).ToList();
+
+            // Logic phân trang y hệt Trang chủ
+            int pageSize = 12;
+            int totalProducts = filteredProducts.Count();
+            int totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
+
+            var productsOnPage = filteredProducts
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            ViewBag.CategoryName = category.Name;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            // Các biến báo cho giao diện biết nó đang ở trang Danh mục
+            ViewBag.ControllerName = "Product";
+            ViewBag.ActionName = "ByCategory";
+            ViewBag.CategoryId = id;
+
+            return View("~/Views/Home/Index.cshtml", productsOnPage);
+        }
     }
 }

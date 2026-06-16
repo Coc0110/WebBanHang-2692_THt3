@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebBanHang_2692.Models.Order>
+@{
+    ViewData["Title"] = "Lịch sử mua hàng";
+}
+
+<div class="container mt-5 mb-5">
+    <h3 class="fw-bold mb-4 text-danger"><i class="bi bi-clock-history me-2"></i>@ViewData["Title"]</h3>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info shadow-sm p-4 text-center">
+            <h5 class="fw-bold mb-3">Bạn chưa có đơn hàng nào!</h5>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-danger rounded-pill px-4">Bắt đầu mua sắm ngay</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover align-middle mb-0 bg-white">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="py-3 px-4">Mã đơn</th>
+                        <th class="py-3">Thời gian đặt</th>
+                        <th class="py-3">Người nhận</th>
+                        <th class="py-3">SĐT</th>
+                        <th class="py-3">Sản phẩm</th>
+                        <th class="py-3 text-end px-4">Tổng tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold text-danger px-4">#@order.Id</td>
+                            <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@order.ReceiverName</td>
+                            <td>@order.PhoneNumber</td>
+                            <td>
+                                <ul class="list-unstyled mb-0">
+                                    @foreach (var detail in order.OrderDetails)
+                                    {
+                                        <li>- @detail.Product.Name <span class="badge bg-secondary rounded-pill ms-1">x @detail.Quantity</span></li>
+                                    }
+                                </ul>
+                            </td>
+                            <td class="fw-bold text-end px-4">@order.TotalPrice.ToString("#,##0") đ</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

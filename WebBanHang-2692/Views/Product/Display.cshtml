@@ -77,14 +77,18 @@
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label for="quantity" class="form-label fw-bold">Số lượng:</label>
-                    <input type="number" class="form-control" id="quantity" value="1" min="1" style="width: 100px;">
-                </div>
+                <form asp-controller="ShoppingCart" asp-action="AddToCart" method="post" class="mb-3">
+                    <input type="hidden" name="productId" value="@Model.Id" />
 
-                <button class="btn btn-danger btn-lg mb-3 me-2 px-5 shadow-sm">
-                    <i class="bi bi-cart-plus"></i> Thêm vào giỏ
-                </button>
+                    <div class="mb-4">
+                        <label for="quantity" class="form-label fw-bold">Số lượng:</label>
+                        <input type="number" name="quantity" class="form-control shadow-sm" id="quantity" value="1" min="1" style="width: 100px;">
+                    </div>
+
+                    <button type="submit" class="btn btn-danger btn-lg me-2 px-5 shadow-sm">
+                        <i class="bi bi-cart-plus"></i> Thêm vào giỏ
+                    </button>
+                </form>
             }
 
             <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg mb-3 shadow-sm">

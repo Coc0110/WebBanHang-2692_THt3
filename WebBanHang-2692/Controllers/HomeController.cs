@@ -38,7 +38,9 @@ namespace WebBanHang_2692.Controllers
             // Truyền dữ liệu phân trang ra View bằng ViewBag
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
-
+            // Báo cho giao diện biết nó đang ở Trang chủ
+            ViewBag.ControllerName = "Home";
+            ViewBag.ActionName = "Index";
             // Gửi danh sách đã cắt (productsOnPage) thay vì toàn bộ (allProducts)
             return View(productsOnPage);
         }

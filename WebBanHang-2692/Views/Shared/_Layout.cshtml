@@ -1,3 +1,9 @@
+@using Microsoft.AspNetCore.Http
+@using WebBanHang_2692.Extensions
+@using System.Security.Claims
+@inject IHttpContextAccessor HttpContextAccessor
+@inject WebBanHang_2692.Repositories.ICategoryRepository CategoryRepository
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -71,10 +77,18 @@
                     <div class="col-md-4 col-6 text-end d-flex justify-content-end align-items-center gap-3">
                         @if (!User.IsInRole(WebBanHang_2692.Models.SD.Role_Admin))
                         {
-                            <a href="#" class="text-white text-decoration-none btn btn-sm btn-outline-light border-0 position-relative px-2">
+                            int cartCount = 0;
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                                var cartKey = $"Cart_{userId}";
+                                var cart = HttpContextAccessor.HttpContext.Session.GetObjectFromJson<List<WebBanHang_2692.Models.CartItem>>(cartKey);
+                                cartCount = cart?.Sum(c => c.Quantity) ?? 0;
+                            }
+                            <a asp-area="" asp-controller="ShoppingCart" asp-action="Index" class="text-white text-decoration-none btn btn-sm btn-outline-light border-0 position-relative px-2 me-2">
                                 <i class="bi bi-cart3 fs-5 align-middle me-1"></i>
                                 <span class="align-middle fw-semibold">Giỏ hàng</span>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">0</span>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">@cartCount</span>
                             </a>
                         }
 
@@ -95,18 +109,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house-door me-1"></i>Trang chủ</a>
                         </li>
-                        @if (User.IsInRole(WebBanHang_2692.Models.SD.Role_Admin))
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-gear me-1"></i>Quản trị
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Quản lý Sản phẩm</a></li>
-                                    <li><a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Quản lý Danh mục</a></li>
-                                </ul>
-                            </li>
-                        }
+                        @{ var categories = await CategoryRepository.GetAllAsync(); }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownCategory" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-list me-1"></i>Danh mục
+                            </a>
+                            <ul class="dropdown-menu shadow-sm border-0" aria-labelledby="navbarDropdownCategory">
+                                @foreach(var cat in categories)
+                                {
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="ByCategory" asp-route-id="@cat.Id">@cat.Name</a></li>
+                                }
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

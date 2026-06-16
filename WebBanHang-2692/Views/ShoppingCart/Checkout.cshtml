@@ -1,0 +1,38 @@
+﻿@model WebBanHang_2692.Models.Order
+@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="fw-bold mb-4">Thông tin giao hàng</h2>
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <form asp-action="Checkout" method="post">
+                        <div class="mb-3">
+                            <label asp-for="ReceiverName" class="form-label fw-semibold">Tên người nhận (*)</label>
+                            <input asp-for="ReceiverName" class="form-control" required placeholder="Nhập họ và tên..." />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label fw-semibold">Số điện thoại (*)</label>
+                            <input asp-for="PhoneNumber" class="form-control" required placeholder="Nhập số điện thoại..." />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ShippingAddress" class="form-label fw-semibold">Địa chỉ giao hàng (*)</label>
+                            <input asp-for="ShippingAddress" class="form-control" required placeholder="Nhập địa chỉ chi tiết (số nhà, ngõ, đường, phường, quận)..." />
+                            <small class="text-success"><i class="bi bi-info-circle"></i> Sẽ tự động lưu làm mặc định cho lần sau.</small>
+                        </div>
+                        <div class="mb-4">
+                            <label asp-for="Notes" class="form-label fw-semibold">Ghi chú (Tùy chọn)</label>
+                            <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Ví dụ: Giao vào giờ hành chính, gọi trước khi đến..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-danger w-100 py-2 fw-bold rounded-pill shadow-sm">
+                            <i class="bi bi-check2-circle me-1"></i> XÁC NHẬN ĐẶT HÀNG
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

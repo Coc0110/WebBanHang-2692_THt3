@@ -1,0 +1,98 @@
+﻿@model IEnumerable<WebBanHang_2692.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Giỏ hàng của bạn";
+    decimal totalCartPrice = Model.Sum(item => item.Price * item.Quantity);
+}
+
+<div class="container mt-5 mb-5">
+    <h2 class="fw-bold mb-4"><i class="bi bi-cart-check me-2 text-danger"></i>Giỏ hàng của bạn</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center shadow-sm py-5">
+            <h4 class="alert-heading fw-bold mb-3">Giỏ hàng trống!</h4>
+            <p>Bạn chưa thêm sản phẩm nào vào giỏ hàng. Hãy quay lại cửa hàng để tiếp tục mua sắm nhé.</p>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-danger mt-3 px-4 rounded-pill">
+                <i class="bi bi-arrow-left me-1"></i> Tiếp tục mua sắm
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <!-- Cột danh sách sản phẩm -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body p-0">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col" class="ps-4">Sản phẩm</th>
+                                    <th scope="col" class="text-center">Đơn giá</th>
+                                    <th scope="col" class="text-center" style="width: 120px;">Số lượng</th>
+                                    <th scope="col" class="text-center">Thành tiền</th>
+                                    <th scope="col" class="text-center pe-4">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="ps-4">
+                                            <div class="d-flex align-items-center">
+                                                <img src="@item.ImageUrl" alt="@item.Name" class="rounded me-3 shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" />
+                                                <span class="fw-semibold">@item.Name</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center text-muted">@item.Price.ToString("#,##0") đ</td>
+                                        <td class="text-center fw-bold text-dark">
+                                            @item.Quantity
+                                        </td>
+                                        <td class="text-center text-danger fw-bold">
+                                            @((item.Price * item.Quantity).ToString("#,##0")) đ
+                                        </td>
+                                        <td class="text-center pe-4">
+                                            <a asp-controller="ShoppingCart" asp-action="RemoveFromCart" asp-route-productId="@item.ProductId" 
+                                               class="btn btn-sm btn-outline-danger rounded-circle shadow-sm" style="width: 32px; height: 32px; padding: 0; line-height: 30px;">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột Tổng tiền & Thanh toán -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-4 border-bottom pb-2">Hóa đơn</h4>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Tổng phụ:</span>
+                            <span class="fw-semibold">@totalCartPrice.ToString("#,##0") đ</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Phí vận chuyển:</span>
+                            <span class="fw-semibold text-success">Miễn phí</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-4 border-top pt-3">
+                            <span class="fw-bold fs-5">Tổng cộng:</span>
+                            <span class="fw-bold fs-5 text-danger">@totalCartPrice.ToString("#,##0") đ</span>
+                        </div>
+
+                        <a asp-controller="ShoppingCart" asp-action="Checkout" class="btn btn-danger w-100 py-2 rounded-pill shadow-sm mb-2 fw-bold">
+                            TIẾN HÀNH THANH TOÁN
+                        </a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-light w-100 py-2 rounded-pill shadow-sm text-muted">
+                            Tiếp tục mua sắm
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

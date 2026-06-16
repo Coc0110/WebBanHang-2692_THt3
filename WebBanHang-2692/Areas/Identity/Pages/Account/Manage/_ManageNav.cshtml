@@ -1,0 +1,40 @@
+@using WebBanHang_2692.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<ul class="nav nav-pills flex-column shadow-sm p-2 rounded bg-white">
+    <li class="nav-item mb-1">
+        <a class="nav-link rounded-pill @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">
+            <i class="bi bi-person-lines-fill me-2"></i>Hồ sơ cá nhân
+        </a>
+    </li>
+    
+    @if (User.IsInRole("Admin"))
+    {
+        <li class="nav-item mt-3 mb-1">
+            <span class="text-uppercase text-muted fw-bold ms-2" style="font-size: 0.8rem;">Quản trị viên</span>
+        </li>
+        <li class="nav-item mb-1">
+            <a class="nav-link rounded-pill text-dark" asp-area="Admin" asp-controller="Product" asp-action="Index">
+                <i class="bi bi-box-seam text-danger me-2"></i>Quản lý sản phẩm
+            </a>
+        </li>
+        <li class="nav-item mb-1">
+            <a class="nav-link rounded-pill text-dark" asp-area="Admin" asp-controller="Category" asp-action="Index">
+                <i class="bi bi-tags text-danger me-2"></i>Quản lý danh mục
+            </a>
+        </li>
+    }
+
+    @if (!User.IsInRole("Admin"))
+    {
+        <li class="nav-item mt-3 mb-1">
+            <span class="text-uppercase text-muted fw-bold ms-2" style="font-size: 0.8rem;">Tiện ích</span>
+        </li>
+        <li class="nav-item mb-1">
+            <a class="nav-link rounded-pill text-dark" asp-area="" asp-controller="Order" asp-action="Index">
+                <i class="bi bi-clock-history text-danger me-2"></i>Lịch sử mua hàng
+            </a>
+        </li>
+    }
+</ul>
