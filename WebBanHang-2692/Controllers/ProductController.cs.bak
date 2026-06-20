@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http; // Thêm thư viện để dùng IFormFile
 using System.IO; // Thêm thư viện để xử lý đường dẫn và luồng file (Path, FileStream)
@@ -95,12 +95,11 @@ public class ProductController : Controller
 
     // Process the product update
     [HttpPost]
-    public async Task<IActionResult> Update(Product product, IFormFile? mainImage)
+    public async Task<IActionResult> Update(Product product, IFormFile mainImage)
     {
         // Bỏ qua lỗi validation cho các trường hình ảnh vì ta tự xử lý
         ModelState.Remove("ImageUrl");
         ModelState.Remove("ImageUrls");
-        ModelState.Remove("Category"); // Xóa lỗi validation ẩn của thuộc tính Category
 
         if (ModelState.IsValid)
         {
@@ -111,16 +110,6 @@ public class ProductController : Controller
             }
             // Nếu mainImage == null (người dùng không tải ảnh mới), 
             // product.ImageUrl sẽ tự động giữ lại giá trị đường dẫn cũ nhờ thẻ input hidden bên View.
-
-            // Vá lỗi mất dữ liệu Category khi gán đè (Ngăn ứng dụng bị crash khi hiển thị lại Index)
-            foreach (var cat in _categoryRepository.GetAllCategories())
-            {
-                if (cat.Id == product.CategoryId)
-                {
-                    product.Category = cat;
-                    break;
-                }
-            }
 
             _productRepository.Update(product);
             return RedirectToAction("Index");
